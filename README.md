@@ -1,4 +1,4 @@
-# Ex.No: 11 Develop a application to add animations to ImageView,Move,blink,fade,clockwise,zoom,slide operations are perform in android studio.
+# Ex.No: 6 Develop a application to add animations to ImageView,Move,blink,fade,clockwise,zoom,slide operations are perform in android studio.
 
 
 ## AIM:
@@ -17,14 +17,214 @@ Android Studio(Latest Version)
 ```
 /*
 Program to display animation operation”.
-Developed by:
-Registeration Number :
+Developed by: Surendhar A
+Registeration Number : 212222110049
 */
 ```
+activity-main.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/img" />
+
+        <Button
+            android:id="@+id/blinkBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Blink" />
+
+        <Button
+            android:id="@+id/fadeBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Fade" />
+
+        <Button
+            android:id="@+id/moveBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Move" />
+
+        <Button
+            android:id="@+id/rotateBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Rotate" />
+
+        <Button
+            android:id="@+id/slideBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Slide" />
+
+        <Button
+            android:id="@+id/zoomBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Zoom" />
+
+        <Button
+            android:id="@+id/stopBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Stop Animation"
+            android:backgroundTint="#FF5252"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+</ScrollView>
+```
+
+slide.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromYDelta="100%"
+    android:toYDelta="0%"
+    android:duration="1000"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse" />
+```
+
+blink.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:repeatMode="reverse"
+    android:repeatCount="infinite" />
+```
+
+fade.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:duration="2000"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse" />
+```
+
+rotate.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:duration="1500"
+    android:repeatCount="infinite" />
+```
+
+zoom.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXScale="1.0"
+    android:toXScale="1.5"
+    android:fromYScale="1.0"
+    android:toYScale="1.5"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:duration="1000"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse" />
+```
+
+move.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXDelta="0%"
+    android:toXDelta="100%"
+    android:duration="1000"
+    android:repeatCount="1"
+    android:repeatMode="reverse" />
+```
+
+Mainactivity.java
+```
+package com.example.animationgraphics;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity {
+
+    ImageView imageView;
+    Button blinkBtn, fadeBtn, moveBtn, rotateBtn, slideBtn, zoomBtn, stopBtn;
+    Animation currentAnimation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = findViewById(R.id.imageView);
+        blinkBtn = findViewById(R.id.blinkBtn);
+        fadeBtn = findViewById(R.id.fadeBtn);
+        moveBtn = findViewById(R.id.moveBtn);
+        rotateBtn = findViewById(R.id.rotateBtn);
+        slideBtn = findViewById(R.id.slideBtn);
+        zoomBtn = findViewById(R.id.zoomBtn);
+        stopBtn = findViewById(R.id.stopBtn);
+
+        blinkBtn.setOnClickListener(v -> startAnimation(R.anim.blink));
+        fadeBtn.setOnClickListener(v -> startAnimation(R.anim.fade));
+        moveBtn.setOnClickListener(v -> startAnimation(R.anim.move));
+        rotateBtn.setOnClickListener(v -> startAnimation(R.anim.rotate));
+        slideBtn.setOnClickListener(v -> startAnimation(R.anim.slide));
+        zoomBtn.setOnClickListener(v -> startAnimation(R.anim.zoom));
+
+        stopBtn.setOnClickListener(v -> stopAnimation());
+    }
+
+    private void startAnimation(int animRes) {
+        stopAnimation(); // stop if already animating
+        currentAnimation = AnimationUtils.loadAnimation(this, animRes);
+        imageView.startAnimation(currentAnimation);
+    }
+
+    private void stopAnimation() {
+        if (currentAnimation != null) {
+            currentAnimation.cancel();
+            imageView.clearAnimation();
+        }
+    }
+}
+```
+
+
 
 ## OUTPUT
-
+<img width="295" height="517" alt="image" src="https://github.com/user-attachments/assets/f3fdeeed-367e-4db6-96ff-3d971274abc8" />
+<img width="325" height="578" alt="image" src="https://github.com/user-attachments/assets/191e7599-168e-4613-a5bd-6ddf44fdf9c1" />
+<img width="308" height="506" alt="image" src="https://github.com/user-attachments/assets/f887e6f5-ca46-4086-a769-ecb68e1c670c" />
 
 
 
 ## RESULT
+Therefore to add animations to ImageView,Move,blink,fade,clockwise,zoom,slide operations are perform in android studio succcessfully.
